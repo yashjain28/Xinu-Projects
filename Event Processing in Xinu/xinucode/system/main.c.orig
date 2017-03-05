@@ -1,0 +1,32 @@
+/*  main.c  - main */
+
+#include <xinu.h>
+
+pid32 publisher1;
+pid32 publisher2;
+
+process Publish(void)
+{
+	kprintf("publishing now\n");
+	publish(5,10);
+	kprintf("published now with error\n");
+	return OK;
+}
+
+process	main(void)
+{
+
+	/* Run the Xinu shell */
+
+	recvclr();
+	publisher1=create(Publish, 4096, 50, "publisher proc",0);
+	publisher2=create(Publish, 4096, 50, "publisher proc2",0);
+	
+	resched_cntl(DEFER_START);
+	resume(publisher1);
+	resume(publisher2);
+	resched_cntl(DEFER_STOP);
+	kprintf("ending my main code\n");
+	return OK;
+    
+}

@@ -1,0 +1,32 @@
+1. sendMsg.c
+Assuming that no other process is using the original send or receive on the process. As I am using the predefined states receive where receive usually implies that process is waiting for some data to arrive on prmsg. 
+
+And change the state of the process to ready if it is in the receive/receive_time state.
+
+2. receiveMsg.c
+make that entry as -1 when it is read. Just to show it is consumed/read
+
+
+
+
+3. sendMsgs.c
+If no of messages to send is less then the available space then in that case dont send any message, make the sending atomic.
+success is -1 in that case
+
+4. receiveMsgs.c
+
+If the message count is greater than array size then returns error 
+else goes into the receiving state till the message count messages are there in the queue.
+makes the entry as -1 when that entry is read. Just to show it is consumed/read.
+hardcoded to give error if msgcount is greater than 10.
+
+5. SENDNMSGS:
+
+If no message sent to a process successfully then return syserr else returns no of messages successfully sent. 
+
+
+Process.h, protoypes.h and create.c is updated 
+
+
+
+Here the implementation is using a fixed size array but the implementation can be extended by creating extra bufferpool and then making a pointer at prmsg to the linked list in the bufferpool. But the required problem is solved without that implementation. Hence, not implemented in this Lab. 
